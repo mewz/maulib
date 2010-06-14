@@ -1,0 +1,18 @@
+Author: Jason Hullinger
+email: sshjason@gmail.com
+
+Lib designed to security handle buffers and other tasks. The other goal is that if the implementation of a function needs to be changed
+due to a security or performance issue, you'll only need one place to go to make those changes. To put it another way, this encapsulates
+common functions that are considered security and/or performance issues - or to simply make life easier.
+
+
+- strutils
+  Helper functions designed to safely handle string buffers. I've chosen to not use realloc because this function contains side effects in that
+  the pointer address may change. Therefor any other pointers pointing to this address must also be update. Also, if realloc changes pointer locations
+  it does not nullify the memory previous memory block and this could lead to privacy issues.
+  Contains the following functions:
+  	   str_malloc - malloc a and nullify a buffer
+	   create_new_string - Creates a malloced string buffer. Caller is responsible for freeing it.
+	   append_cstring - Creates a new malloced string that appends one string to another string. Caller is responsible
+	   		    for freeing the original and returned string.
+	   secure_free_cstring - Sets the memory buffer to null, then free's it.
